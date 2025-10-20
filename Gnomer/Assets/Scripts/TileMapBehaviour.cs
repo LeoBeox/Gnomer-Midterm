@@ -52,9 +52,13 @@ public class TileMapBehaviour : MonoBehaviour
 
             // Debug.Log("enterd if statement");
 
+
+            TileBehaviour tileBehaviour = tilePrefabs[cellPosition].GetComponent<TileBehaviour>();
             if (tileHealth.ContainsKey(cellPosition))
             {
                 tileHealth[cellPosition]--;
+
+                tileBehaviour.isDamaged();
 
                 // Debug.Log("enterd if 2. Tile health: " + tileHealth[cellPosition]);
 

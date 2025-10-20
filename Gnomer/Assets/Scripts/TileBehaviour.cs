@@ -6,25 +6,23 @@ using UnityEngine.Tilemaps;
 public class TileBehaviour : MonoBehaviour
 {
 
-
-    [SerializeField] public static int Health;
-
-    private Rigidbody2D _rb;
-
-
-
-    
+    private SpriteRenderer _sprRenderer;
+    [SerializeField] public Sprite spr_damaged;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
 
-        _rb = GetComponent<Rigidbody2D>();
+        _sprRenderer = GetComponent<SpriteRenderer>();
 
-        Health = 2;
+        _sprRenderer.sortingOrder = 1; // Above Tilemap
 
     }
 
+    public void isDamaged()
+    {
+        _sprRenderer.sprite = spr_damaged;
+    }
 
     // Update is called once per frame
     void Update()
