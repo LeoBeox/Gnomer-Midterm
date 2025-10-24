@@ -1,9 +1,10 @@
 using UnityEngine;
+using System.Collections;
 
 public static class Utilities
 {
 
-    
+
     public enum GameState
     {
         MainMenu,
@@ -12,8 +13,5 @@ public static class Utilities
         GameOver,
         Victory
     }
-    
-
-
 
 }
