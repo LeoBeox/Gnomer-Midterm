@@ -99,17 +99,25 @@ public class PlayerBehaviour : MonoBehaviour
     void OnCollisionEnter2D(Collision2D other)
     {
 
-
+        Debug.Log("You not colliding shit");
         if (other.gameObject.CompareTag("Tile"))
         {
             // _directionY = 0.0f;
         }
-        else if (other.gameObject.CompareTag("Treasure"))
+
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Treasure"))
         {
+
+            Debug.Log("made it into emerald else if!");
             _source.resource = _treasureGet;
         }
         else if (other.gameObject.CompareTag("PowerUp"))
         {
+            Debug.Log("made it into powerup else if!");
             _source.resource = _powerUp;
         }
 
