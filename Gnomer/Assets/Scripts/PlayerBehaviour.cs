@@ -37,13 +37,9 @@ public class PlayerBehaviour : MonoBehaviour
     // Updates linear velocity with direction and speed
     void FixedUpdate()
     {
-
-        
-
         if (GameManager.Instance.CurrentState == Utilities.GameState.Playing)
         {
             _rb.linearVelocity = new Vector2(_directionX * Speed, _directionY * Speed);
-
         }
         else
         {
@@ -75,10 +71,15 @@ public class PlayerBehaviour : MonoBehaviour
             _directionY += 1.0f;
         if (Input.GetKey(_downDirection))
             _directionY -= 1.0f;
-        
+
 
         Debug.Log("Going down " + _directionY);
 
+        if (_hasSpeedBoost)
+        {
+            _directionX *= _currentSpeedMultiplier;
+            _directionY *= _currentSpeedMultiplier;
+        }
     }
 
 

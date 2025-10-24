@@ -2201,8 +2201,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d68824e0bd22d4a04b4e4788bbfc0d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMultiplier: 2
-  duration: 5
+  speedMultiplier: 3
+  duration: 10
 --- !u!212 &1455447369
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3038,7 +3038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3abde94e8d7d34f40af17ef523239826, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 7
+  Speed: 5
   _rightDirection: 275
   _leftDirection: 276
   _upDirection: 273

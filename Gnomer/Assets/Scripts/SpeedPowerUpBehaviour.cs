@@ -5,8 +5,8 @@ public class Speed : MonoBehaviour
 {
 
     // Power Up Settings
-    public float speedMultiplier = 4f;
-    public float duration = 8f;
+    public float speedMultiplier;
+    public float duration;
 
     private SpriteRenderer sprRenderer;
 
