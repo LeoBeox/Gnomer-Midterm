@@ -98,12 +98,23 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        scene = SceneManager.GetActiveScene();
+        SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitMenu();
     }
 
-
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        
+        if (scene.name == "MainMenu")
+        {
+            InitMenu();
+        }
+        else if (scene.name == "GameScene")
+        {
+            StartGame();
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -127,7 +138,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        Debug.Log("Currently in " + CurrentState);
+        // Debug.Log("Currently in " + CurrentState);
     }
 
 
