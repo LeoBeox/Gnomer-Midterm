@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using JetBrains.Annotations;
 using UnityEditor.Callbacks;
+using System.Collections;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -17,6 +18,11 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] public KeyCode _downDirection;
 
     private Rigidbody2D _rb;
+
+    // Power Up Variables
+
+    private float _currentSpeedMultiplier = 1f;
+    private bool _hasSpeedBoost = false;
    
    
    
@@ -69,8 +75,10 @@ public class PlayerBehaviour : MonoBehaviour
             _directionY += 1.0f;
         if (Input.GetKey(_downDirection))
             _directionY -= 1.0f;
-
         
+
+        Debug.Log("Going down " + _directionY);
+
     }
 
 
@@ -90,9 +98,44 @@ public class PlayerBehaviour : MonoBehaviour
         }
 
     }
-    
+
     public void TakeDamage()
     {
         GameManager.Instance.Health -= 1;
+    }
+
+    public void ActivateSpeedBoost(float multiplier, float duration)
+    {
+        // If already has speed boost, restart the timer
+        if (_hasSpeedBoost)
+        {
+            StopCoroutine(nameof(SpeedBoostCoroutine));
+        }
+
+        StartCoroutine(SpeedBoostCoroutine(multiplier, duration));
+    }
+    
+    private IEnumerator SpeedBoostCoroutine(float multiplier, float duration)
+    {
+        _hasSpeedBoost = true;
+        _currentSpeedMultiplier = multiplier;
+
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        Color originalColor = Color.white;
+        if (sr != null)
+        {
+            originalColor = sr.color;
+            sr.color = Color.yellow;
+        }
+
+        yield return new WaitForSeconds(duration);
+
+        _currentSpeedMultiplier = 1.0f;
+        _hasSpeedBoost = false;
+
+        if (sr != null)
+        {
+            sr.color = originalColor;
+        }
     }
 }
