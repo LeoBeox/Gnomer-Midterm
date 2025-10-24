@@ -33,9 +33,20 @@ public class PlayerBehaviour : MonoBehaviour
     // Updates linear velocity with direction and speed
     void FixedUpdate()
     {
-        _rb.linearVelocity = new Vector2(_directionX * Speed, _directionY * Speed);
 
-        goingDown = _rb.linearVelocity.y < -0.1f;
+        
+
+        if (GameManager.Instance.CurrentState == Utilities.GameState.Playing)
+        {
+            _rb.linearVelocity = new Vector2(_directionX * Speed, _directionY * Speed);
+
+            goingDown = _rb.linearVelocity.y < -0.1f;
+        }
+        else
+        {
+            _rb.linearVelocity = Vector2.zero;
+            goingDown = false;
+        }
     }
 
 
@@ -43,7 +54,12 @@ public class PlayerBehaviour : MonoBehaviour
     void Update()
     {
 
-        // _rb.simulated = Manager.Instance.State != Utilities.GameState.Pause;
+        if (GameManager.Instance.CurrentState != Utilities.GameState.Playing)
+        {
+            _directionX = 0.0f;
+            _directionY = 0.0f;
+            return;
+        }
 
         _directionX = 0.0f;
         _directionY = 0.0f;
@@ -71,6 +87,16 @@ public class PlayerBehaviour : MonoBehaviour
         {
             _directionY = 0.0f;
         }
-        
+
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            TakeDamage();
+        }
+
+    }
+    
+    public void TakeDamage()
+    {
+        GameManager.Instance.Health -= 1;
     }
 }

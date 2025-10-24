@@ -2,24 +2,13 @@ using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
-
-public enum GameState
-{
-    MainMenu,
-    Playing,
-    Paused,
-    GameOver,
-    Victory
-}
-
-
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
 
     private static GameManager _instance;
-    private GameState _currentState;
+    private Utilities.GameState _currentState;
     private int _score;
     private int _health;
 
@@ -47,7 +36,7 @@ public class GameManager : MonoBehaviour
 
 
 
-    public GameState CurrentState
+    public Utilities.GameState CurrentState
     {
         get { return _currentState; }
         private set
@@ -85,7 +74,7 @@ public class GameManager : MonoBehaviour
 
             if (_health <= 0)
             {
-                SetGameState(GameState.GameOver);
+                SetGameState(Utilities.GameState.GameOver);
             }
         }
     }
@@ -103,7 +92,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        InitGame();
+        StartGame();
     }
 
 
@@ -112,47 +101,42 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (CurrentState == GameState.Playing)
+            if (CurrentState == Utilities.GameState.Playing)
             {
                 PauseGame();
             }
-            else if (CurrentState == GameState.Paused)
+            else if (CurrentState == Utilities.GameState.Paused)
             {
                 ResumeGame();
             }
         }
+
+        Debug.Log("Currently in " + CurrentState);
     }
 
 
-    private void InitGame()
-    {
-        _score = 0;
-        _health = maxHealth;
-        CurrentState = GameState.MainMenu;
-    }
-
-    public void SetGameState(GameState newState)
+    public void SetGameState(Utilities.GameState newState)
     {
         CurrentState = newState;
     }
 
-    private void OnStateChanged(GameState newState)
+    private void OnStateChanged(Utilities.GameState newState)
     {
         switch (newState)
         {
-            case GameState.MainMenu:
+            case Utilities.GameState.MainMenu:
                 Time.timeScale = 1f;
                 break;
-            case GameState.Playing:
+            case Utilities.GameState.Playing:
                 Time.timeScale = 1f;
                 break;
-            case GameState.Paused:
+            case Utilities.GameState.Paused:
                 Time.timeScale = 0f;
                 break;
-            case GameState.GameOver:
+            case Utilities.GameState.GameOver:
                 Time.timeScale = 0f;
                 break;
-            case GameState.Victory:
+            case Utilities.GameState.Victory:
                 Time.timeScale = 0f;
                 break;
         }
@@ -164,34 +148,34 @@ public class GameManager : MonoBehaviour
     {
         _score = 0;
         _health = maxHealth;
-        SetGameState(GameState.Playing);
+        SetGameState(Utilities.GameState.Playing);
     }
 
     public void PauseGame()
     {
-        if (CurrentState == GameState.Playing)
+        if (CurrentState == Utilities.GameState.Playing)
         {
-            SetGameState(GameState.Paused);
+            SetGameState(Utilities.GameState.Paused);
         }
     }
 
     public void ResumeGame()
     {
-        if (CurrentState == GameState.Paused)
+        if (CurrentState == Utilities.GameState.Paused)
         {
-            SetGameState(GameState.Playing);
+            SetGameState(Utilities.GameState.Playing);
         } 
     }
 
 
     public void GameOver()
     {
-        SetGameState(GameState.GameOver);
+        SetGameState(Utilities.GameState.GameOver);
     }
 
     public void Victory()
     {
-        SetGameState(GameState.Victory);
+        SetGameState(Utilities.GameState.Victory);
     }
 
     public void QuitGame()
