@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class TreasureScript : MonoBehaviour
 {
@@ -33,6 +34,8 @@ public class TreasureScript : MonoBehaviour
             GameManager.Instance.AddTreasureScore();
             Destroy(gameObject);
         }
+
+        
     }
 
     private IEnumerator Rotate()

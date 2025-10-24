@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class Speed : MonoBehaviour
 {
@@ -22,20 +23,29 @@ public class Speed : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+
+        Debug.Log("enterd trigger for collision!");
+
         if (other.CompareTag("Player"))
         {
             PlayerBehaviour player = other.GetComponent<PlayerBehaviour>();
             if (player != null)
             {
+                Debug.Log("enterd if statement for powerup!");
                 player.ActivateSpeedBoost(speedMultiplier, duration);
-
                 GameManager.Instance.AddScore(50);
 
-                Destroy(gameObject);
+                Disappear();
             }
+
         }
 
 
+    }
+
+    void Disappear()
+    {
+        Destroy(gameObject);
     }
 
     private IEnumerator RotatePowerUp()

@@ -4,6 +4,7 @@ using UnityEditor.Experimental.GraphView;
 using JetBrains.Annotations;
 using UnityEditor.Callbacks;
 using System.Collections;
+using UnityEngine.Audio;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -17,6 +18,14 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] public KeyCode _upDirection;
     [SerializeField] public KeyCode _downDirection;
 
+    [SerializeField] private AudioResource _treasureGet;
+
+    [SerializeField] private AudioResource _powerUp;
+
+    private AudioSource _source;
+
+    
+
     private Rigidbody2D _rb;
 
     // Power Up Variables
@@ -29,8 +38,11 @@ public class PlayerBehaviour : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
-        
+
         _rb = GetComponent<Rigidbody2D>();
+
+        _source = GetComponent<AudioSource>();
+    
 
     }
 
@@ -92,12 +104,16 @@ public class PlayerBehaviour : MonoBehaviour
         {
             // _directionY = 0.0f;
         }
-
-        if (other.gameObject.CompareTag("Enemy"))
+        else if (other.gameObject.CompareTag("Treasure"))
         {
-            TakeDamage();
+            _source.resource = _treasureGet;
+        }
+        else if (other.gameObject.CompareTag("PowerUp"))
+        {
+            _source.resource = _powerUp;
         }
 
+        _source.Play();
     }
 
     public void TakeDamage()
