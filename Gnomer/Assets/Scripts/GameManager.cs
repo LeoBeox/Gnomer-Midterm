@@ -2,6 +2,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -11,6 +12,11 @@ public class GameManager : MonoBehaviour
     private Utilities.GameState _currentState;
     private int _score;
     private int _health;
+
+    private Scene scene;
+
+
+    private TMP_Text pauseText;
 
 
     // Player Stats
@@ -92,14 +98,24 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        StartGame();
+        scene = SceneManager.GetActiveScene();
+
+        InitMenu();
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        
+        if (CurrentState == Utilities.GameState.MainMenu && SceneManager.GetActiveScene() != scene)
+        {
+            StartGame();
+        }
+        
+        
+        
+        if (Input.GetKeyDown(KeyCode.P))
         {
             if (CurrentState == Utilities.GameState.Playing)
             {
@@ -144,10 +160,22 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public void InitMenu()
+    {
+        SetGameState(Utilities.GameState.MainMenu);
+    }
+    
+    
+    
     public void StartGame()
     {
         _score = 0;
         _health = maxHealth;
+
+        var tmp = GameObject.FindWithTag("TMPText");
+        pauseText = tmp.GetComponent<TextMeshProUGUI>();
+
+
         SetGameState(Utilities.GameState.Playing);
     }
 
@@ -156,6 +184,8 @@ public class GameManager : MonoBehaviour
         if (CurrentState == Utilities.GameState.Playing)
         {
             SetGameState(Utilities.GameState.Paused);
+            pauseText.enabled = true;
+            Debug.Log("pause text is" + pauseText.enabled);
         }
     }
 
@@ -164,6 +194,7 @@ public class GameManager : MonoBehaviour
         if (CurrentState == Utilities.GameState.Paused)
         {
             SetGameState(Utilities.GameState.Playing);
+            pauseText.enabled = false;
         } 
     }
 

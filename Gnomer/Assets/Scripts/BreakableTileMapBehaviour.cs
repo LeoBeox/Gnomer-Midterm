@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class TileMapBehaviour : MonoBehaviour
+public class BreakableTileMapBehaviour : MonoBehaviour
 {
     public Tilemap tilemap;
     public GameObject tilePrefab;
@@ -47,7 +47,7 @@ public class TileMapBehaviour : MonoBehaviour
         
         Vector3Int cellPosition = tilemap.WorldToCell(hitPosition);
 
-        if (other.gameObject.CompareTag("Player") && PlayerBehaviour.goingDown == true)
+        if (other.gameObject.CompareTag("Player"))
         {
 
             // Debug.Log("enterd if statement");

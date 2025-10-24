@@ -9,8 +9,6 @@ public class PlayerBehaviour : MonoBehaviour
 
     public float Speed = 7f;
     private float _directionX, _directionY;
-
-    public static bool goingDown;
     
 
     [SerializeField] public KeyCode _rightDirection;
@@ -40,12 +38,10 @@ public class PlayerBehaviour : MonoBehaviour
         {
             _rb.linearVelocity = new Vector2(_directionX * Speed, _directionY * Speed);
 
-            goingDown = _rb.linearVelocity.y < -0.1f;
         }
         else
         {
             _rb.linearVelocity = Vector2.zero;
-            goingDown = false;
         }
     }
 
@@ -85,7 +81,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (other.gameObject.CompareTag("Tile"))
         {
-            _directionY = 0.0f;
+            // _directionY = 0.0f;
         }
 
         if (other.gameObject.CompareTag("Enemy"))
